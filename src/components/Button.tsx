@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	text: {
-		color: '#fff'
+		fontSize: 16,
+		color: '#F7F7F7',
+		fontWeight: 'semibold',
+		textTransform: 'uppercase'
 	}
 });
