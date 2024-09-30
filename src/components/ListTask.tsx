@@ -12,10 +12,12 @@ export interface TaskData {
 
 export function ListTask({
 	ListHeaderComponent,
-	handleGoToDetailsScreen
+	handleGoToDetailsScreen,
+	handleDeleteTask
 }: {
 	ListHeaderComponent: ReactElement;
 	handleGoToDetailsScreen: (data: TaskData) => void;
+	handleDeleteTask: (id: number) => void;
 }) {
 	return (
 		<>
@@ -28,6 +30,7 @@ export function ListTask({
 						title={item.name}
 						checked={item.checked}
 						onPress={() => handleGoToDetailsScreen(item)}
+						handleDeleteTask={() => handleDeleteTask(item.id)}
 					/>
 				)}
 				contentContainerStyle={{ gap: 20 }}

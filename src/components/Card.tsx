@@ -6,9 +6,10 @@ interface CardProps {
 	title: string;
 	checked: boolean;
 	onPress: () => void;
+	handleDeleteTask: () => void;
 }
 
-export function Card({ title, checked, onPress }: CardProps) {
+export function Card({ title, checked, onPress, handleDeleteTask }: CardProps) {
 	return (
 		<TouchableOpacity style={styles.container} onPress={onPress}>
 			<View style={styles.contentCheck}>
@@ -17,7 +18,7 @@ export function Card({ title, checked, onPress }: CardProps) {
 					{title}
 				</Text>
 			</View>
-			<Trash />
+			<Trash handleDeleteTask={handleDeleteTask} />
 		</TouchableOpacity>
 	);
 }

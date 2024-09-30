@@ -1,9 +1,9 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { TrashIcon } from '../assets';
 
-export function Trash() {
+export function Trash({ handleDeleteTask }: { handleDeleteTask: () => void }) {
 	return (
-		<TouchableOpacity style={styles.container}>
+		<TouchableOpacity style={styles.container} onPress={handleDeleteTask}>
 			<TrashIcon />
 		</TouchableOpacity>
 	);

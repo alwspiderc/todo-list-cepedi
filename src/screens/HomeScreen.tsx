@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import {
 	ButtonPlus,
@@ -31,11 +31,28 @@ export function HomeScreen({ navigation }: any) {
 		});
 	}
 
+	function handleDeleteTask(id: number) {
+		Alert.alert('Excluir tarefa', 'Deseja realmente excluir esta tarefa?', [
+			{
+				text: 'Cancelar',
+				style: 'cancel'
+			},
+			{
+				text: 'Excluir',
+				style: 'destructive',
+				onPress: () => {
+					// Delete task
+				}
+			}
+		]);
+	}
+
 	return (
 		<View style={styles.container}>
 			<ButtonPlus onPress={handleOpenModalizeCreate} />
 			<ListTask
 				handleGoToDetailsScreen={handleGoToDetailsScreen}
+				handleDeleteTask={handleDeleteTask}
 				ListHeaderComponent={
 					<>
 						<Logo />
