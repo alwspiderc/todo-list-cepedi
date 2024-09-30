@@ -1,5 +1,6 @@
 export * from './Button';
 export * from './ButtonPlus';
+export * from './ButtonBack';
 export * from './Card';
 export * from './CheckBox';
 export * from './CreateEditModalize';

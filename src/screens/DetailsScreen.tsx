@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { ButtonBack } from '../components/ButtonBack';
-import { Button, CreateEditModalize } from '../components';
-import { RootStackParamList } from '../../App';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useRef } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+import { Button, CreateEditModalize, ButtonBack } from '../components';
+import { RootStackParamList } from '../../App';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 
