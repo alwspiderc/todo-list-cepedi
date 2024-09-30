@@ -1,28 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { ButtonBack } from '../components/ButtonBack';
 import { Button } from '../components';
+import { RootStackParamList } from '../../App';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-interface Props {}
+type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 
-export function DetailsScreen({}: Props) {
+export function DetailsScreen({ route }: Props) {
+	const { name, description, checked } = route.params;
+
 	return (
 		<View style={styles.container}>
 			<View>
 				<ButtonBack />
-				<Text style={styles.title}>Lavar Roupas</Text>
-				<Text style={styles.description}>
-					It is a long established fact that a reader will be distracted by the
-					readable content of a page when looking at its layout. The point of
-					using Lorem Ipsum is that it has a more-or-less normal distribution of
-					letters, as opposed to using 'Content here, content here', making it
-					look like readable English. Many desktop publishing packages and web
-					page editors now use Lorem Ipsum as their default model text, and a
-					search for 'lorem ipsum' will uncover many web sites still in their
-					infancy. Various versions have evolved over the years, sometimes by
-					accident, sometimes on purpose (injected humour and the like).
-				</Text>
+				<Text style={styles.title}>{name}</Text>
+				<Text style={styles.description}>{description}</Text>
 			</View>
-			<Button title="Editar" />
+			{!checked && <Button title="Editar" />}
 		</View>
 	);
 }

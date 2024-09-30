@@ -8,10 +8,11 @@ import {
 	Header,
 	InputSearch,
 	ListTask,
-	Logo
+	Logo,
+	TaskData
 } from '../components';
 
-export function HomeScreen() {
+export function HomeScreen({ navigation }: any) {
 	const filterRef = useRef<Modalize>(null);
 	const createRef = useRef<Modalize>(null);
 
@@ -21,10 +22,20 @@ export function HomeScreen() {
 	function handleOpenModalizeCreate() {
 		createRef.current?.open();
 	}
+
+	function handleGoToDetailsScreen(data: TaskData) {
+		navigation.navigate('Details', {
+			name: data.name,
+			description: data.description,
+			checked: data.checked
+		});
+	}
+
 	return (
 		<View style={styles.container}>
 			<ButtonPlus onPress={handleOpenModalizeCreate} />
 			<ListTask
+				handleGoToDetailsScreen={handleGoToDetailsScreen}
 				ListHeaderComponent={
 					<>
 						<Logo />

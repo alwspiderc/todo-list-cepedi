@@ -1,9 +1,16 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ArrowIcon } from '../assets';
+import { useNavigation } from '@react-navigation/native';
 
 export function ButtonBack() {
+	const navigation = useNavigation();
+
+	function handleGoBack() {
+		navigation.goBack();
+	}
+
 	return (
-		<TouchableOpacity style={styles.container}>
+		<TouchableOpacity style={styles.container} onPress={handleGoBack}>
 			<ArrowIcon />
 			<Text style={styles.text}>Voltar</Text>
 		</TouchableOpacity>

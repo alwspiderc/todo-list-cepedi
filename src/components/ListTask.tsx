@@ -3,10 +3,18 @@ import { FlatList } from 'react-native';
 import data from '../mock/tasks.json';
 import { Card } from './Card';
 
+export interface TaskData {
+	name: string;
+	description: string;
+	checked: boolean;
+}
+
 export function ListTask({
-	ListHeaderComponent
+	ListHeaderComponent,
+	handleGoToDetailsScreen
 }: {
 	ListHeaderComponent: ReactElement;
+	handleGoToDetailsScreen: (data: TaskData) => void;
 }) {
 	return (
 		<>
@@ -18,7 +26,7 @@ export function ListTask({
 					<Card
 						title={item.name}
 						checked={item.checked}
-						onPress={() => console.log('Pressed')}
+						onPress={() => handleGoToDetailsScreen(item)}
 					/>
 				)}
 				contentContainerStyle={{ gap: 20 }}
