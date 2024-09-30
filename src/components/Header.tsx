@@ -1,11 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Filter } from './Filter';
 
-export function Header({ title }: { title: string }) {
+export function Header({
+	title,
+	onPress
+}: {
+	title: string;
+	onPress: () => void;
+}) {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.text}>{title}</Text>
-			<Filter />
+			<Filter onPress={onPress} />
 		</View>
 	);
 }

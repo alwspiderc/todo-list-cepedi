@@ -1,28 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CheckBox } from './CheckBox';
 import { Trash } from './Trash';
 
 interface CardProps {
 	title: string;
 	checked: boolean;
+	onPress: () => void;
 }
 
-export function Card({ title, checked }: CardProps) {
+export function Card({ title, checked, onPress }: CardProps) {
 	return (
-		<View style={styles.container}>
+		<TouchableOpacity style={styles.container} onPress={onPress}>
 			<View style={styles.contentCheck}>
 				<CheckBox checked={checked} />
-				<Text
-					style={[
-						styles.title,
-						{ textDecorationLine: checked ? 'line-through' : 'none' }
-					]}
-				>
+				<Text style={[styles.title, checked && styles.titleChecked]}>
 					{title}
 				</Text>
 			</View>
 			<Trash />
-		</View>
+		</TouchableOpacity>
 	);
 }
 
@@ -45,5 +41,8 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 14,
 		marginLeft: 8
+	},
+	titleChecked: {
+		textDecorationLine: 'line-through'
 	}
 });

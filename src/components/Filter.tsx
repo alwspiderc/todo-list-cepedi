@@ -1,9 +1,9 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { FilterIcon } from '../assets';
 
-export function Filter() {
+export function Filter({ onPress }: { onPress: () => void }) {
 	return (
-		<TouchableOpacity style={styles.container}>
+		<TouchableOpacity style={styles.container} onPress={onPress}>
 			<FilterIcon />
 		</TouchableOpacity>
 	);

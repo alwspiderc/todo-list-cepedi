@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 import { FlatList } from 'react-native';
+
 import { Card } from './Card';
 
 const data = [
@@ -25,15 +26,21 @@ export function ListTask({
 	ListHeaderComponent: ReactElement;
 }) {
 	return (
-		<FlatList
-			ListHeaderComponent={ListHeaderComponent}
-			style={{ paddingBottom: 100 }}
-			data={data}
-			renderItem={({ item }) => (
-				<Card title={item.name} checked={item.checked} />
-			)}
-			contentContainerStyle={{ gap: 20 }}
-			showsVerticalScrollIndicator={false}
-		/>
+		<>
+			<FlatList
+				ListHeaderComponent={ListHeaderComponent}
+				style={{ paddingBottom: 100 }}
+				data={data}
+				renderItem={({ item }) => (
+					<Card
+						title={item.name}
+						checked={item.checked}
+						onPress={() => console.log('Pressed')}
+					/>
+				)}
+				contentContainerStyle={{ gap: 20 }}
+				showsVerticalScrollIndicator={false}
+			/>
+		</>
 	);
 }
