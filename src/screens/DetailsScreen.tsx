@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { ButtonBack } from '../components/ButtonBack';
 import { Button } from '../components';
 
@@ -6,36 +6,11 @@ interface Props {}
 
 export function DetailsScreen({}: Props) {
 	return (
-		<View
-			style={{
-				flex: 1,
-				paddingHorizontal: 20,
-				justifyContent: 'space-between',
-				marginBottom: 50
-			}}
-		>
+		<View style={styles.container}>
 			<View>
 				<ButtonBack />
-				<Text
-					style={{
-						color: '#494949',
-						fontSize: 24,
-						fontWeight: 'bold',
-						marginTop: 45,
-						textAlign: 'center'
-					}}
-				>
-					Lavar Roupas
-				</Text>
-				<Text
-					style={{
-						color: '#494949',
-						fontSize: 20,
-						marginTop: 20,
-						textAlign: 'left',
-						lineHeight: 24
-					}}
-				>
+				<Text style={styles.title}>Lavar Roupas</Text>
+				<Text style={styles.description}>
 					It is a long established fact that a reader will be distracted by the
 					readable content of a page when looking at its layout. The point of
 					using Lorem Ipsum is that it has a more-or-less normal distribution of
@@ -51,3 +26,26 @@ export function DetailsScreen({}: Props) {
 		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		paddingHorizontal: 20,
+		justifyContent: 'space-between',
+		marginBottom: 50
+	},
+	title: {
+		color: '#494949',
+		fontSize: 24,
+		fontWeight: 'bold',
+		marginTop: 45,
+		textAlign: 'center'
+	},
+	description: {
+		color: '#494949',
+		fontSize: 20,
+		marginTop: 20,
+		textAlign: 'left',
+		lineHeight: 24
+	}
+});
