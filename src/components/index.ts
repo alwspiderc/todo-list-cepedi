@@ -3,6 +3,7 @@ export * from './ButtonPlus';
 export * from './Card';
 export * from './CheckBox';
 export * from './Filter';
+export * from './FilterModalize';
 export * from './Header';
 export * from './Input';
 export * from './ListTask';

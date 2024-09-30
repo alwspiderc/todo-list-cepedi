@@ -1,10 +1,9 @@
 import { useRef } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import {
-	Button,
 	ButtonPlus,
-	CheckBox,
+	FilterModalize,
 	Header,
 	Input,
 	ListTask,
@@ -31,37 +30,7 @@ export function HomeScreen() {
 				}
 			/>
 
-			<Modalize
-				ref={filterRef}
-				modalHeight={500}
-				HeaderComponent={
-					<Text
-						style={{
-							fontSize: 20,
-							marginTop: 30,
-							fontWeight: 'bold',
-							textAlign: 'center'
-						}}
-					>
-						Filtro
-					</Text>
-				}
-				childrenStyle={{ marginTop: 50 }}
-			>
-				<View style={{ marginLeft: 40, gap: 30 }}>
-					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-						<CheckBox checked />
-						<Text style={{ marginLeft: 8, fontSize: 16 }}>Concluídas</Text>
-					</View>
-					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-						<CheckBox checked={false} />
-						<Text style={{ marginLeft: 8, fontSize: 16 }}>A concluir</Text>
-					</View>
-				</View>
-				<View style={{ paddingHorizontal: 40, marginTop: 70 }}>
-					<Button title="PESQUISAR" />
-				</View>
-			</Modalize>
+			<FilterModalize filterRef={filterRef} />
 		</View>
 	);
 }
