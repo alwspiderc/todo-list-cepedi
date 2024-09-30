@@ -1,23 +1,13 @@
-import {
-	StyleSheet,
-	Text,
-	TextInput,
-	TextInputProps,
-	View
-} from 'react-native';
+import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
 import { SearchIcon } from '../assets';
 
-interface Props extends TextInputProps {
-	label: string;
-	style?: any;
-}
-export function Input({ label, style, ...TextInputProps }: Props) {
+interface Props extends TextInputProps {}
+export function InputSearch({ ...TextInputProps }: Props) {
 	return (
-		<View>
-			<Text style={styles.label}>{label}</Text>
-
+		<View style={styles.container}>
+			<SearchIcon />
 			<TextInput
-				style={[styles.container, style]}
+				style={styles.input}
 				placeholderTextColor="#929292"
 				{...TextInputProps}
 			/>
@@ -37,9 +27,8 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: '#494949'
 	},
-	label: {
-		fontSize: 16,
-		marginTop: 30,
-		marginBottom: 8
+	input: {
+		flex: 1,
+		marginLeft: 16
 	}
 });

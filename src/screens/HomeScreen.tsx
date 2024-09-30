@@ -3,34 +3,42 @@ import { StyleSheet, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import {
 	ButtonPlus,
+	CreateModalize,
 	FilterModalize,
 	Header,
-	Input,
+	InputSearch,
 	ListTask,
 	Logo
 } from '../components';
 
 export function HomeScreen() {
 	const filterRef = useRef<Modalize>(null);
+	const createRef = useRef<Modalize>(null);
 
-	function handleOpenModalize() {
+	function handleOpenModalizeFilter() {
 		filterRef.current?.open();
 	}
-
+	function handleOpenModalizeCreate() {
+		createRef.current?.open();
+	}
 	return (
 		<View style={styles.container}>
-			<ButtonPlus />
+			<ButtonPlus onPress={handleOpenModalizeCreate} />
 			<ListTask
 				ListHeaderComponent={
 					<>
 						<Logo />
-						<Input placeholder="Digite sua busca" />
-						<Header title="Lista de tarefas" onPress={handleOpenModalize} />
+						<InputSearch placeholder="Digite sua busca" />
+						<Header
+							title="Lista de tarefas"
+							onPress={handleOpenModalizeFilter}
+						/>
 					</>
 				}
 			/>
 
 			<FilterModalize filterRef={filterRef} />
+			<CreateModalize createRef={createRef} />
 		</View>
 	);
 }

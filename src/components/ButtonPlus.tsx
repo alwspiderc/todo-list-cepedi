@@ -1,13 +1,10 @@
 import { Text, View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export function ButtonPlus() {
+export function ButtonPlus({ onPress }: { onPress: () => void }) {
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity
-				style={styles.content}
-				onPress={() => console.log('criar task')}
-			>
+			<TouchableOpacity style={styles.content} onPress={onPress}>
 				<Text style={styles.text}>+</Text>
 			</TouchableOpacity>
 		</View>
