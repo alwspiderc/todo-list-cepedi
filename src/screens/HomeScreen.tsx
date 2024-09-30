@@ -10,7 +10,7 @@ export function HomeScreen() {
 					<>
 						<Logo />
 						<Input placeholder="Digite sua busca" />
-						<Header title="Lista de Tarefas" />
+						<Header title="Lista de tarefas" />
 					</>
 				}
 			/>

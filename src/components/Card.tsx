@@ -4,14 +4,22 @@ import { Trash } from './Trash';
 
 interface CardProps {
 	title: string;
+	checked: boolean;
 }
 
-export function Card({ title }: CardProps) {
+export function Card({ title, checked }: CardProps) {
 	return (
 		<View style={styles.container}>
 			<View style={styles.contentCheck}>
-				<CheckBox />
-				<Text style={styles.title}>{title}</Text>
+				<CheckBox checked={checked} />
+				<Text
+					style={[
+						styles.title,
+						{ textDecorationLine: checked ? 'line-through' : 'none' }
+					]}
+				>
+					{title}
+				</Text>
 			</View>
 			<Trash />
 		</View>
