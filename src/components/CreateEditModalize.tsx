@@ -2,17 +2,32 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { Button } from './Button';
 import { Input } from './Input';
+import { TaskData } from './ListTask';
 
-export function CreateModalize({ createRef }: { createRef: any }) {
+export function CreateEditModalize({
+	refModalize,
+	isEdit,
+	task
+}: {
+	refModalize: any;
+	isEdit: boolean;
+	task?: TaskData;
+}) {
 	function HeaderComponent() {
-		return <Text style={styles.title}>Criar Tarefa</Text>;
+		return (
+			<Text style={styles.title}>{isEdit ? 'Editar' : 'Criar'} Tarefa</Text>
+		);
 	}
 
 	function Children() {
 		return (
 			<View style={styles.container}>
 				<View style={{ gap: 20 }}>
-					<Input label="Nome" placeholder="Digite o nome da tarefa" />
+					<Input
+						label="Nome"
+						placeholder="Digite o nome da tarefa"
+						defaultValue={task?.name || ''}
+					/>
 
 					<Input
 						label="Descrição"
@@ -21,16 +36,17 @@ export function CreateModalize({ createRef }: { createRef: any }) {
 						numberOfLines={40}
 						multiline={true}
 						style={{ height: 200 }}
+						defaultValue={task?.description || ''}
 					/>
 				</View>
-				<Button title="Criar" />
+				<Button title={isEdit ? 'Salvar' : 'Criar'} onPress={() => {}} />
 			</View>
 		);
 	}
 
 	return (
 		<Modalize
-			ref={createRef}
+			ref={refModalize}
 			modalHeight={800}
 			HeaderComponent={<HeaderComponent />}
 		>

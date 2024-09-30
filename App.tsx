@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 export type RootStackParamList = {
 	Home: undefined;
 	Details: {
-		// id: number;
+		id: number;
 		name: string;
 		description: string;
 		checked: boolean;

@@ -1,22 +1,31 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { ButtonBack } from '../components/ButtonBack';
-import { Button } from '../components';
+import { Button, CreateEditModalize } from '../components';
 import { RootStackParamList } from '../../App';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useRef } from 'react';
+import { Modalize } from 'react-native-modalize';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 
 export function DetailsScreen({ route }: Props) {
-	const { name, description, checked } = route.params;
-
+	const task = route.params;
+	const editRef = useRef<Modalize>(null);
+	function handleOpenModalizeEdit() {
+		editRef.current?.open();
+	}
 	return (
 		<View style={styles.container}>
 			<View>
 				<ButtonBack />
-				<Text style={styles.title}>{name}</Text>
-				<Text style={styles.description}>{description}</Text>
+				<Text style={styles.title}>{task.name}</Text>
+				<Text style={styles.description}>{task.description}</Text>
 			</View>
-			{!checked && <Button title="Editar" />}
+			{!task.checked && (
+				<Button title="Editar" onPress={handleOpenModalizeEdit} />
+			)}
+
+			<CreateEditModalize refModalize={editRef} task={task} isEdit />
 		</View>
 	);
 }

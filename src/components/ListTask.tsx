@@ -4,6 +4,7 @@ import data from '../mock/tasks.json';
 import { Card } from './Card';
 
 export interface TaskData {
+	id: number;
 	name: string;
 	description: string;
 	checked: boolean;
@@ -31,6 +32,7 @@ export function ListTask({
 				)}
 				contentContainerStyle={{ gap: 20 }}
 				showsVerticalScrollIndicator={false}
+				keyExtractor={(item, index) => item.id.toString()}
 			/>
 		</>
 	);

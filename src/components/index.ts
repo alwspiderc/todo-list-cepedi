@@ -2,7 +2,7 @@ export * from './Button';
 export * from './ButtonPlus';
 export * from './Card';
 export * from './CheckBox';
-export * from './CreateModalize';
+export * from './CreateEditModalize';
 export * from './Filter';
 export * from './FilterModalize';
 export * from './Header';

@@ -2,14 +2,12 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 interface props {
 	title: string;
+	onPress: () => void;
 }
 
-export function Button({ title }: props) {
+export function Button({ title, onPress }: props) {
 	return (
-		<TouchableOpacity
-			style={styles.container}
-			onPress={() => console.log('teste')}
-		>
+		<TouchableOpacity style={styles.container} onPress={onPress}>
 			<Text style={styles.text}>{title}</Text>
 		</TouchableOpacity>
 	);

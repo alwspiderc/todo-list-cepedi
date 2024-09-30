@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import {
 	ButtonPlus,
-	CreateModalize,
+	CreateEditModalize,
 	FilterModalize,
 	Header,
 	InputSearch,
@@ -49,7 +49,7 @@ export function HomeScreen({ navigation }: any) {
 			/>
 
 			<FilterModalize filterRef={filterRef} />
-			<CreateModalize createRef={createRef} />
+			<CreateEditModalize refModalize={createRef} isEdit={false} />
 		</View>
 	);
 }
