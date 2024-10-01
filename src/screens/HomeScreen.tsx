@@ -17,10 +17,10 @@ export function HomeScreen({ navigation }: any) {
 	const createRef = useRef<Modalize>(null);
 
 	function handleOpenModalizeFilter() {
-		filterRef.current?.open();
+		filterRef?.current?.open();
 	}
 	function handleOpenModalizeCreate() {
-		createRef.current?.open();
+		createRef?.current?.open();
 	}
 
 	function handleGoToDetailsScreen(data: TaskData) {

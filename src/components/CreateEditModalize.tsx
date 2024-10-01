@@ -47,7 +47,8 @@ export function CreateEditModalize({
 	return (
 		<Modalize
 			ref={refModalize}
-			modalHeight={800}
+			adjustToContentHeight
+			childrenStyle={{ height: 700 }}
 			HeaderComponent={<HeaderComponent />}
 		>
 			<Children />

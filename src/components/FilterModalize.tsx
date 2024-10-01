@@ -21,14 +21,15 @@ export function FilterModalize({ filterRef }: { filterRef: any }) {
 						<Text style={styles.textCheck}>A concluir</Text>
 					</View>
 				</View>
-				<Button title="PESQUISAR" />
+				<Button title="PESQUISAR" onPress={() => console.log('')} />
 			</View>
 		);
 	}
 	return (
 		<Modalize
 			ref={filterRef}
-			modalHeight={500}
+			adjustToContentHeight
+			childrenStyle={{ height: 500 }}
 			HeaderComponent={<HeaderComponent />}
 		>
 			<Children />
