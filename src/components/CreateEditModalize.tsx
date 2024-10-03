@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { Button } from './Button';
 import { Input } from './Input';
 import { TaskData } from './ListTask';
+import { Formik } from 'formik';
 
 export function CreateEditModalize({
 	refModalize,
@@ -15,15 +16,16 @@ export function CreateEditModalize({
 	task?: TaskData;
 }) {
 	const schema = yup.object().shape({
-		name: yup.string().required('Nome da tarefa é obrigatório')
+		name: yup.string().required('Nome da tarefa é obrigatório'),
+		description: yup.string()
 	});
 
-	function handleCreateTask() {
-		// Create task
+	function handleCreateTask(name: string, description: string) {
+		console.log(name, description);
 	}
 
-	function handleEditTask() {
-		// Edit task
+	function handleEditTask(name: string, description: string) {
+		console.log(name, description);
 	}
 
 	function HeaderComponent() {
@@ -34,32 +36,64 @@ export function CreateEditModalize({
 
 	function Children() {
 		return (
-			<View style={styles.container}>
-				<View style={{ gap: 20 }}>
-					<Input
-						label="Nome"
-						placeholder="Digite o nome da tarefa"
-						defaultValue={task?.name || ''}
-					/>
-
-					<Input
-						label="Descrição"
-						placeholder="Digite a descrição da tarefa"
-						underlineColorAndroid="transparent"
-						numberOfLines={40}
-						multiline={true}
-						style={{ height: 200 }}
-						defaultValue={task?.description || ''}
-					/>
-				</View>
-				<Button
-					title={isEdit ? 'Salvar' : 'Criar'}
-					onPress={() => {
-						isEdit ? handleEditTask() : handleCreateTask();
-						refModalize.current?.close();
-					}}
-				/>
-			</View>
+			<Formik
+				initialValues={{
+					name: isEdit ? task?.name || '' : '',
+					description: isEdit ? task?.description || '' : ''
+				}}
+				validateOnMount={true}
+				onSubmit={(values) => {
+					isEdit
+						? handleEditTask(values.name, values.description)
+						: handleCreateTask(values.name, values.description);
+					refModalize.current?.close();
+				}}
+				validationSchema={schema}
+			>
+				{({
+					handleChange,
+					handleBlur,
+					handleSubmit,
+					values,
+					errors,
+					isValid,
+					touched
+				}) => (
+					<View style={styles.container}>
+						<View style={{ gap: 20 }}>
+							<Input
+								label="Nome"
+								placeholder="Digite o nome da tarefa"
+								onChangeText={handleChange('name')}
+								onBlur={handleBlur('name')}
+								value={values.name}
+							/>
+							{errors.name && touched.name && (
+								<Text style={styles.textErrors}>{errors.name}</Text>
+							)}
+							<Input
+								label="Descrição"
+								placeholder="Digite a descrição da tarefa"
+								underlineColorAndroid="transparent"
+								numberOfLines={40}
+								multiline={true}
+								style={{ height: 200 }}
+								onChangeText={handleChange('description')}
+								onBlur={handleBlur('description')}
+								value={values.description}
+							/>
+						</View>
+						<Button
+							title={isEdit ? 'Salvar' : 'Criar'}
+							style={{
+								backgroundColor: isValid ? '#f8f8f8' : '#b9b9b9',
+								borderColor: isValid ? '#86a6df' : '#a9a9a9'
+							}}
+							onPress={handleSubmit}
+						/>
+					</View>
+				)}
+			</Formik>
 		);
 	}
 
@@ -89,5 +123,9 @@ const styles = StyleSheet.create({
 		marginTop: 30,
 		fontWeight: 'bold',
 		textAlign: 'center'
+	},
+	textErrors: {
+		color: 'red',
+		fontSize: 12
 	}
 });
