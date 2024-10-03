@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
+import * as yup from 'yup';
 import { Button } from './Button';
 import { Input } from './Input';
 import { TaskData } from './ListTask';
@@ -13,6 +14,18 @@ export function CreateEditModalize({
 	isEdit: boolean;
 	task?: TaskData;
 }) {
+	const schema = yup.object().shape({
+		name: yup.string().required('Nome da tarefa é obrigatório')
+	});
+
+	function handleCreateTask() {
+		// Create task
+	}
+
+	function handleEditTask() {
+		// Edit task
+	}
+
 	function HeaderComponent() {
 		return (
 			<Text style={styles.title}>{isEdit ? 'Editar' : 'Criar'} Tarefa</Text>
@@ -39,7 +52,13 @@ export function CreateEditModalize({
 						defaultValue={task?.description || ''}
 					/>
 				</View>
-				<Button title={isEdit ? 'Salvar' : 'Criar'} onPress={() => {}} />
+				<Button
+					title={isEdit ? 'Salvar' : 'Criar'}
+					onPress={() => {
+						isEdit ? handleEditTask() : handleCreateTask();
+						refModalize.current?.close();
+					}}
+				/>
 			</View>
 		);
 	}
