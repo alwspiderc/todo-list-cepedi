@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import * as yup from 'yup';
+import { Formik } from 'formik';
+
 import { Button } from './Button';
 import { Input } from './Input';
 import { TaskData } from './ListTask';
-import { Formik } from 'formik';
 
 export function CreateEditModalize({
 	refModalize,
