@@ -3,29 +3,41 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { Button, CreateEditModalize, ButtonBack } from '../components';
+import {
+	Button,
+	CreateEditModalize,
+	ButtonBack,
+	TaskData
+} from '../components';
 import { RootStackParamList } from '../../App';
+import { useTasks } from '../context';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
 
 export function DetailsScreen({ route }: Props) {
-	const task = route.params;
+	// const taskParams = route.params;
+	const { aditTask } = useTasks();
 	const editRef = useRef<Modalize>(null);
 	function handleOpenModalizeEdit() {
 		editRef.current?.open();
 	}
+
 	return (
 		<View style={styles.container}>
 			<View>
 				<ButtonBack />
-				<Text style={styles.title}>{task.name}</Text>
-				<Text style={styles.description}>{task.description}</Text>
+				<Text style={styles.title}>{aditTask?.name}</Text>
+				<Text style={styles.description}>{aditTask?.description}</Text>
 			</View>
-			{!task.checked && (
-				<Button title="Editar" onPress={handleOpenModalizeEdit} />
+			{!aditTask?.checked && (
+				<Button
+					title="Editar"
+					onPress={handleOpenModalizeEdit}
+					isValid={true}
+				/>
 			)}
 
-			<CreateEditModalize refModalize={editRef} task={task} isEdit />
+			<CreateEditModalize refModalize={editRef} task={aditTask} isEdit={true} />
 		</View>
 	);
 }

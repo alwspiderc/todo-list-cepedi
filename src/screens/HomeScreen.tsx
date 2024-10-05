@@ -1,6 +1,14 @@
-import { useRef } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import {
+	Alert,
+	KeyboardAvoidingView,
+	Platform,
+	StyleSheet,
+	View
+} from 'react-native';
 import { Modalize } from 'react-native-modalize';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
 	ButtonPlus,
 	CreateEditModalize,
@@ -11,8 +19,10 @@ import {
 	Logo,
 	TaskData
 } from '../components';
+import { useTasks } from '../context';
 
 export function HomeScreen({ navigation }: any) {
+	const { tasks, setTasks, setEditTask } = useTasks();
 	const filterRef = useRef<Modalize>(null);
 	const createRef = useRef<Modalize>(null);
 
@@ -24,14 +34,17 @@ export function HomeScreen({ navigation }: any) {
 	}
 
 	function handleGoToDetailsScreen(data: TaskData) {
-		navigation.navigate('Details', {
-			name: data.name,
-			description: data.description,
-			checked: data.checked
-		});
+		setEditTask(data);
+		navigation.navigate('Details');
+		// navigation.navigate('Details', {
+		// 	id: data.id,
+		// 	name: data.name,
+		// 	description: data.description,
+		// 	checked: data.checked
+		// });
 	}
 
-	function handleDeleteTask(id: number) {
+	function handleDeleteTask(id: string) {
 		Alert.alert('Excluir tarefa', 'Deseja realmente excluir esta tarefa?', [
 			{
 				text: 'Cancelar',
@@ -41,7 +54,9 @@ export function HomeScreen({ navigation }: any) {
 				text: 'Excluir',
 				style: 'destructive',
 				onPress: () => {
-					// Delete task
+					const updatedTasks = tasks.filter((task) => task.id !== id);
+					AsyncStorage.setItem('@tasks', JSON.stringify(updatedTasks));
+					setTasks(updatedTasks);
 				}
 			}
 		]);
@@ -50,7 +65,9 @@ export function HomeScreen({ navigation }: any) {
 	return (
 		<View style={styles.container}>
 			<ButtonPlus onPress={handleOpenModalizeCreate} />
+
 			<ListTask
+				tasks={tasks}
 				handleGoToDetailsScreen={handleGoToDetailsScreen}
 				handleDeleteTask={handleDeleteTask}
 				ListHeaderComponent={
@@ -73,6 +90,7 @@ export function HomeScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
 	container: {
+		flex: 1,
 		paddingHorizontal: 20
 	}
 });

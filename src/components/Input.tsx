@@ -3,21 +3,30 @@ import {
 	Text,
 	TextInput,
 	TextInputProps,
-	View
+	View,
+	StyleProp,
+	TextStyle,
+	Platform
 } from 'react-native';
-import { SearchIcon } from '../assets';
 
 interface Props extends TextInputProps {
 	label: string;
-	style?: any;
+	style?: StyleProp<TextStyle>;
 }
+
 export function Input({ label, style, ...TextInputProps }: Props) {
 	return (
 		<View>
 			<Text style={styles.label}>{label}</Text>
 
 			<TextInput
-				style={[styles.container, style]}
+				style={[
+					styles.container,
+					style,
+					TextInputProps.multiline && Platform.OS === 'ios'
+						? { height: 'auto', minHeight: 200 }
+						: { height: 'auto', maxHeight: 200 }
+				]}
 				placeholderTextColor="#929292"
 				{...TextInputProps}
 			/>
@@ -27,15 +36,15 @@ export function Input({ label, style, ...TextInputProps }: Props) {
 
 const styles = StyleSheet.create({
 	container: {
-		flexDirection: 'row',
-		alignItems: 'center',
 		width: '100%',
 		height: 50,
 		backgroundColor: '#F7F7F7',
 		borderRadius: 5,
 		paddingHorizontal: 10,
 		borderWidth: 1,
-		borderColor: '#494949'
+		borderColor: '#494949',
+		textAlignVertical: 'top',
+		paddingVertical: 10
 	},
 	label: {
 		fontSize: 16,

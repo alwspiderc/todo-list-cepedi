@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import {
+	KeyboardAvoidingView,
+	Platform,
+	StyleSheet,
+	Text,
+	View
+} from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import * as yup from 'yup';
 import { Formik } from 'formik';
@@ -6,6 +12,7 @@ import { Formik } from 'formik';
 import { Button } from './Button';
 import { Input } from './Input';
 import { TaskData } from './ListTask';
+import { useTasks } from '../context';
 
 export function CreateEditModalize({
 	refModalize,
@@ -16,18 +23,12 @@ export function CreateEditModalize({
 	isEdit: boolean;
 	task?: TaskData;
 }) {
+	const { handleEditTask, handleCreateTask } = useTasks();
+
 	const schema = yup.object().shape({
 		name: yup.string().required('Nome da tarefa é obrigatório'),
 		description: yup.string()
 	});
-
-	function handleCreateTask(name: string, description: string) {
-		console.log(name, description);
-	}
-
-	function handleEditTask(name: string, description: string) {
-		console.log(name, description);
-	}
 
 	function HeaderComponent() {
 		return (
@@ -43,30 +44,33 @@ export function CreateEditModalize({
 					description: isEdit ? task?.description || '' : ''
 				}}
 				validateOnMount={true}
-				onSubmit={(values) => {
-					isEdit
-						? handleEditTask(values.name, values.description)
-						: handleCreateTask(values.name, values.description);
+				onSubmit={(values, { resetForm }) => {
+					if (isEdit) {
+						handleEditTask?.({
+							id: task!.id,
+							checked: task!.checked,
+							name: values.name,
+							description: values.description
+						});
+					} else {
+						handleCreateTask?.(values.name, values.description);
+					}
+					resetForm();
 					refModalize.current?.close();
 				}}
 				validationSchema={schema}
 			>
-				{({
-					handleChange,
-					handleBlur,
-					handleSubmit,
-					values,
-					errors,
-					isValid,
-					touched
-				}) => (
-					<View style={styles.container}>
+				{({ handleChange, handleSubmit, values, errors, isValid, touched }) => (
+					<KeyboardAvoidingView
+						behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+						keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+						style={styles.container}
+					>
 						<View style={{ gap: 20 }}>
 							<Input
 								label="Nome"
 								placeholder="Digite o nome da tarefa"
 								onChangeText={handleChange('name')}
-								onBlur={handleBlur('name')}
 								value={values.name}
 							/>
 							{errors.name && touched.name && (
@@ -78,21 +82,16 @@ export function CreateEditModalize({
 								underlineColorAndroid="transparent"
 								numberOfLines={40}
 								multiline={true}
-								style={{ height: 200 }}
 								onChangeText={handleChange('description')}
-								onBlur={handleBlur('description')}
 								value={values.description}
 							/>
 						</View>
 						<Button
 							title={isEdit ? 'Salvar' : 'Criar'}
-							style={{
-								backgroundColor: isValid ? '#f8f8f8' : '#b9b9b9',
-								borderColor: isValid ? '#86a6df' : '#a9a9a9'
-							}}
+							isValid={isEdit ? true : isValid}
 							onPress={handleSubmit}
 						/>
-					</View>
+					</KeyboardAvoidingView>
 				)}
 			</Formik>
 		);
@@ -101,8 +100,10 @@ export function CreateEditModalize({
 	return (
 		<Modalize
 			ref={refModalize}
+			key={isEdit ? 'edit' : 'create'}
 			adjustToContentHeight
-			childrenStyle={{ height: 700 }}
+			scrollViewProps={{ showsVerticalScrollIndicator: false }}
+			childrenStyle={{ height: 500 }}
 			HeaderComponent={<HeaderComponent />}
 		>
 			<Children />
@@ -115,9 +116,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignContent: 'center',
 		justifyContent: 'center',
-		marginTop: 30,
 		marginHorizontal: 40,
-		gap: 150
+		gap: 30
 	},
 	title: {
 		fontSize: 20,
