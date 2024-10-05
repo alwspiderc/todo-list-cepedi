@@ -26,7 +26,9 @@ export function ListTask({
 			<FlatList
 				ListHeaderComponent={ListHeaderComponent}
 				style={{ paddingBottom: 100 }}
-				data={tasks?.reverse()}
+				data={tasks
+					?.sort((a, b) => (a.checked === b.checked ? 0 : a.checked ? -1 : 1))
+					.reverse()}
 				renderItem={({ item }) => (
 					<Card
 						key={item.id}
