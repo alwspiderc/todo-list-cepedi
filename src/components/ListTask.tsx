@@ -26,7 +26,7 @@ export function ListTask({
 			<FlatList
 				ListHeaderComponent={ListHeaderComponent}
 				style={{ paddingBottom: 100 }}
-				data={tasks}
+				data={tasks?.reverse()}
 				renderItem={({ item }) => (
 					<Card
 						key={item.id}
