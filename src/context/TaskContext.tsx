@@ -3,14 +3,17 @@ import { TaskData } from '../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type TaskContextType = {
-	tasks: TaskData[];
-	setTasks: React.Dispatch<React.SetStateAction<TaskData[]>>;
+	tasks: TaskData[] | undefined;
+	setTasks: React.Dispatch<React.SetStateAction<TaskData[] | undefined>>;
+	loadTasks: () => void;
 	aditTask: TaskData | undefined;
 	setEditTask: React.Dispatch<React.SetStateAction<TaskData | undefined>>;
+	status: string;
+	setStatus: (status: string) => void;
 	handleCreateTask: (name: string, description: string) => void;
 	handleEditTask: (task?: TaskData) => void;
 	handleCheckTask: (id: string) => void;
-	handleFilterTasks: (status: string) => void;
+	handleFilterTasks: () => void;
 };
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -20,8 +23,9 @@ type TaskProviderProps = {
 };
 
 export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
-	const [tasks, setTasks] = useState<TaskData[]>([]);
+	const [tasks, setTasks] = useState<TaskData[] | undefined>([]);
 	const [aditTask, setEditTask] = useState<TaskData | undefined>(undefined);
+	const [status, setStatus] = useState('all');
 
 	useEffect(() => {
 		loadTasks();
@@ -39,7 +43,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 
 	async function handleCreateTask(name: string, description: string) {
 		const newTask = {
-			id: tasks.length + 1,
+			id: (tasks?.length ?? 0) + 1,
 			name,
 			description,
 			checked: false
@@ -81,7 +85,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 	}
 
 	async function handleCheckTask(id: string) {
-		const updatedTasks = tasks.map((item: TaskData) => {
+		const updatedTasks = tasks?.map((item: TaskData) => {
 			if (id === item.id) {
 				item.checked = !item.checked;
 			}
@@ -95,17 +99,21 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 		}
 	}
 
-	async function handleFilterTasks(status: string) {
-		const storedTasks = await AsyncStorage.getItem('@tasks');
-		let updatedTasks = storedTasks ? JSON.parse(storedTasks) : [];
+	async function handleFilterTasks() {
+		let updatedTasks;
 
 		if (status === 'all') {
-			return setTasks(updatedTasks);
-		} else if (status === 'completed') {
-			updatedTasks = tasks.filter((task) => task.checked);
-		} else if (status === 'uncompleted') {
-			updatedTasks = tasks.filter((task) => !task.checked);
+			loadTasks();
+			return;
 		}
+		if (status === 'completed') {
+			updatedTasks = tasks?.filter((task) => task.checked);
+		}
+
+		if (status === 'uncompleted') {
+			updatedTasks = tasks?.filter((task) => !task.checked);
+		}
+
 		setTasks(updatedTasks);
 	}
 
@@ -114,6 +122,9 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 			value={{
 				tasks,
 				setTasks,
+				status,
+				setStatus,
+				loadTasks,
 				aditTask,
 				setEditTask,
 				handleCreateTask,

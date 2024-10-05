@@ -6,8 +6,7 @@ import { useTasks } from '../context';
 import { useState } from 'react';
 
 export function FilterModalize({ filterRef }: { filterRef: any }) {
-	const [status, setStatus] = useState('all');
-	const { handleFilterTasks } = useTasks();
+	const { handleFilterTasks, status, setStatus } = useTasks();
 
 	function HeaderComponent() {
 		return <Text style={styles.title}>Filtro</Text>;
@@ -45,7 +44,7 @@ export function FilterModalize({ filterRef }: { filterRef: any }) {
 						if (status === '') {
 							return;
 						}
-						handleFilterTasks(status);
+						handleFilterTasks();
 						filterRef.current.close();
 					}}
 					isValid={true}

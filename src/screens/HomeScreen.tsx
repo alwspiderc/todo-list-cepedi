@@ -16,12 +16,14 @@ import {
 import { useTasks } from '../context';
 
 export function HomeScreen({ navigation }: any) {
-	const { tasks, setTasks, setEditTask } = useTasks();
+	const { tasks, setTasks, setEditTask, loadTasks, setStatus } = useTasks();
 	const filterRef = useRef<Modalize>(null);
 	const createRef = useRef<Modalize>(null);
 
 	function handleOpenModalizeFilter() {
 		filterRef?.current?.open();
+		setStatus('all');
+		loadTasks();
 	}
 	function handleOpenModalizeCreate() {
 		createRef?.current?.open();
@@ -42,7 +44,7 @@ export function HomeScreen({ navigation }: any) {
 				text: 'Excluir',
 				style: 'destructive',
 				onPress: () => {
-					const updatedTasks = tasks.filter((task) => task.id !== id);
+					const updatedTasks = tasks?.filter((task) => task.id !== id);
 					AsyncStorage.setItem('@tasks', JSON.stringify(updatedTasks));
 					setTasks(updatedTasks);
 				}

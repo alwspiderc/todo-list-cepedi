@@ -19,7 +19,7 @@ export function ListTask({
 	ListHeaderComponent: ReactElement;
 	handleGoToDetailsScreen: (data: TaskData) => void;
 	handleDeleteTask: (id: string) => void;
-	tasks: TaskData[];
+	tasks: TaskData[] | undefined;
 }) {
 	return (
 		<>
@@ -39,7 +39,7 @@ export function ListTask({
 				)}
 				contentContainerStyle={{ gap: 20 }}
 				showsVerticalScrollIndicator={false}
-				keyExtractor={(item, index) => item.id}
+				keyExtractor={(item) => item.id}
 				ListEmptyComponent={<Text>Nenhuma tarefa encontrada!</Text>}
 			/>
 		</>
