@@ -55,6 +55,12 @@ export function FilterModalize({ filterRef }: { filterRef: any }) {
 	return (
 		<Modalize
 			ref={filterRef}
+			handlePosition="inside"
+			handleStyle={{
+				backgroundColor: '#E1E1E1',
+				marginTop: 20
+			}}
+			key={'filter'}
 			adjustToContentHeight
 			childrenStyle={{ height: 500 }}
 			HeaderComponent={<HeaderComponent />}
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 20,
-		marginTop: 30,
+		marginTop: 60,
 		fontWeight: 'bold',
 		textAlign: 'center'
 	}

@@ -100,6 +100,11 @@ export function CreateEditModalize({
 	return (
 		<Modalize
 			ref={refModalize}
+			handlePosition="inside"
+			handleStyle={{
+				backgroundColor: '#E1E1E1',
+				marginTop: 20
+			}}
 			key={isEdit ? 'edit' : 'create'}
 			adjustToContentHeight
 			scrollViewProps={{ showsVerticalScrollIndicator: false }}
@@ -121,7 +126,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 20,
-		marginTop: 30,
+		marginTop: 60,
 		fontWeight: 'bold',
 		textAlign: 'center'
 	},

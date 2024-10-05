@@ -63,7 +63,7 @@ export function HomeScreen({ navigation }: any) {
 				ListHeaderComponent={
 					<>
 						<Logo />
-						<InputSearch placeholder="Digite sua busca" />
+						{/* <InputSearch placeholder="Digite sua busca" /> */}
 						<Header
 							title="Lista de tarefas"
 							onPress={handleOpenModalizeFilter}
@@ -81,6 +81,7 @@ export function HomeScreen({ navigation }: any) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingHorizontal: 20
+		paddingHorizontal: 20,
+		paddingBottom: 20
 	}
 });
