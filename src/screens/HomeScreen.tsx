@@ -1,11 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import {
-	Alert,
-	KeyboardAvoidingView,
-	Platform,
-	StyleSheet,
-	View
-} from 'react-native';
+import { useRef } from 'react';
+import { Alert, StyleSheet, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -36,12 +30,6 @@ export function HomeScreen({ navigation }: any) {
 	function handleGoToDetailsScreen(data: TaskData) {
 		setEditTask(data);
 		navigation.navigate('Details');
-		// navigation.navigate('Details', {
-		// 	id: data.id,
-		// 	name: data.name,
-		// 	description: data.description,
-		// 	checked: data.checked
-		// });
 	}
 
 	function handleDeleteTask(id: string) {

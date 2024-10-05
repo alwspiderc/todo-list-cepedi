@@ -9,6 +9,7 @@ type TaskContextType = {
 	setEditTask: React.Dispatch<React.SetStateAction<TaskData | undefined>>;
 	handleCreateTask: (name: string, description: string) => void;
 	handleEditTask: (task?: TaskData) => void;
+	handleCheckTask: (id: string) => void;
 };
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -78,6 +79,21 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 		}
 	}
 
+	async function handleCheckTask(id: string) {
+		const updatedTasks = tasks.map((item: TaskData) => {
+			if (id === item.id) {
+				item.checked = !item.checked;
+			}
+			return item;
+		});
+		try {
+			await AsyncStorage.setItem('@tasks', JSON.stringify(updatedTasks));
+			setTasks(updatedTasks);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
 	return (
 		<TaskContext.Provider
 			value={{
@@ -86,7 +102,8 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 				aditTask,
 				setEditTask,
 				handleCreateTask,
-				handleEditTask
+				handleEditTask,
+				handleCheckTask
 			}}
 		>
 			{children}

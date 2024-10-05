@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { FlatList, Text } from 'react-native';
-import data from '../mock/tasks.json';
 import { Card } from './Card';
+import { useTasks } from '../context';
 
 export interface TaskData {
 	id: string;
@@ -31,6 +31,7 @@ export function ListTask({
 					<Card
 						key={item.id}
 						title={item.name}
+						id={item.id}
 						checked={item.checked}
 						onPress={() => handleGoToDetailsScreen(item)}
 						handleDeleteTask={() => handleDeleteTask(item.id)}

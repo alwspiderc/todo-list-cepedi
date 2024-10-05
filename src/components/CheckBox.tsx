@@ -1,9 +1,18 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { CheckIcon } from '../assets/icons/CheckIcon';
 
-export function CheckBox({ checked }: { checked: boolean }) {
+export function CheckBox({
+	checked,
+	onPress
+}: {
+	checked: boolean;
+	onPress: () => void;
+}) {
 	return (
-		<TouchableOpacity style={[styles.container, checked && styles.checked]}>
+		<TouchableOpacity
+			style={[styles.container, checked && styles.checked]}
+			onPress={onPress}
+		>
 			<CheckIcon />
 		</TouchableOpacity>
 	);

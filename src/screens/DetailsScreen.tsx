@@ -1,21 +1,11 @@
 import { useRef } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import {
-	Button,
-	CreateEditModalize,
-	ButtonBack,
-	TaskData
-} from '../components';
-import { RootStackParamList } from '../../App';
+import { Button, CreateEditModalize, ButtonBack } from '../components';
 import { useTasks } from '../context';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Details'>;
-
-export function DetailsScreen({ route }: Props) {
-	// const taskParams = route.params;
+export function DetailsScreen() {
 	const { aditTask } = useTasks();
 	const editRef = useRef<Modalize>(null);
 	function handleOpenModalizeEdit() {
