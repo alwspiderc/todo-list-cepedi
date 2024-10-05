@@ -18,13 +18,6 @@ export function FilterModalize({ filterRef }: { filterRef: any }) {
 				<View style={styles.containerCheck}>
 					<View style={styles.contentCheck}>
 						<CheckBox
-							checked={status === 'all'}
-							onPress={() => setStatus('all')}
-						/>
-						<Text style={styles.textCheck}>Todas</Text>
-					</View>
-					<View style={styles.contentCheck}>
-						<CheckBox
 							checked={status === 'completed'}
 							onPress={() => setStatus('completed')}
 						/>
