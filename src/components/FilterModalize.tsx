@@ -2,8 +2,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { CheckBox } from './CheckBox';
 import { Button } from './Button';
+import { useTasks } from '../context';
+import { useState } from 'react';
 
 export function FilterModalize({ filterRef }: { filterRef: any }) {
+	const [status, setStatus] = useState('all');
+	const { handleFilterTasks } = useTasks();
+
 	function HeaderComponent() {
 		return <Text style={styles.title}>Filtro</Text>;
 	}
@@ -13,15 +18,38 @@ export function FilterModalize({ filterRef }: { filterRef: any }) {
 			<View style={styles.container}>
 				<View style={styles.containerCheck}>
 					<View style={styles.contentCheck}>
-						<CheckBox checked />
+						<CheckBox
+							checked={status === 'all'}
+							onPress={() => setStatus('all')}
+						/>
+						<Text style={styles.textCheck}>Todas</Text>
+					</View>
+					<View style={styles.contentCheck}>
+						<CheckBox
+							checked={status === 'completed'}
+							onPress={() => setStatus('completed')}
+						/>
 						<Text style={styles.textCheck}>Concluídas</Text>
 					</View>
 					<View style={styles.contentCheck}>
-						<CheckBox checked={false} />
+						<CheckBox
+							checked={status === 'uncompleted'}
+							onPress={() => setStatus('uncompleted')}
+						/>
 						<Text style={styles.textCheck}>A concluir</Text>
 					</View>
 				</View>
-				<Button title="PESQUISAR" onPress={() => console.log('')} />
+				<Button
+					title="PESQUISAR"
+					onPress={() => {
+						if (status === '') {
+							return;
+						}
+						handleFilterTasks(status);
+						filterRef.current.close();
+					}}
+					isValid={true}
+				/>
 			</View>
 		);
 	}

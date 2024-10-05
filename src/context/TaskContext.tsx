@@ -10,6 +10,7 @@ type TaskContextType = {
 	handleCreateTask: (name: string, description: string) => void;
 	handleEditTask: (task?: TaskData) => void;
 	handleCheckTask: (id: string) => void;
+	handleFilterTasks: (status: string) => void;
 };
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -94,6 +95,20 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 		}
 	}
 
+	async function handleFilterTasks(status: string) {
+		const storedTasks = await AsyncStorage.getItem('@tasks');
+		let updatedTasks = storedTasks ? JSON.parse(storedTasks) : [];
+
+		if (status === 'all') {
+			return setTasks(updatedTasks);
+		} else if (status === 'completed') {
+			updatedTasks = tasks.filter((task) => task.checked);
+		} else if (status === 'uncompleted') {
+			updatedTasks = tasks.filter((task) => !task.checked);
+		}
+		setTasks(updatedTasks);
+	}
+
 	return (
 		<TaskContext.Provider
 			value={{
@@ -103,7 +118,8 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 				setEditTask,
 				handleCreateTask,
 				handleEditTask,
-				handleCheckTask
+				handleCheckTask,
+				handleFilterTasks
 			}}
 		>
 			{children}
