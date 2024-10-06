@@ -72,7 +72,7 @@ export function HomeScreen({ navigation }: any) {
 				}
 			/>
 
-			<FilterModalize filterRef={filterRef} />
+			{/* <FilterModalize filterRef={filterRef} /> */}
 			<CreateEditModalize refModalize={createRef} isEdit={false} />
 		</View>
 	);

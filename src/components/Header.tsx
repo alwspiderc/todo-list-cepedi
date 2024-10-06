@@ -11,7 +11,7 @@ export function Header({
 	return (
 		<View style={styles.container}>
 			<Text style={styles.text}>{title}</Text>
-			<Filter onPress={onPress} />
+			{/* <Filter onPress={onPress} /> */}
 		</View>
 	);
 }
